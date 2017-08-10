@@ -22,3 +22,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.tab.active {
+  color: red
+}
+.webview.active {
+  color:red;
+}
