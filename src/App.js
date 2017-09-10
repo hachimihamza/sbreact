@@ -1,92 +1,112 @@
 import React, {Component} from 'react';
-//import logo from './logo.svg';
+import ReactDOM from 'react-dom';
 import './App.css';
 
-/*=============================================
-=            WebViews            =
-=============================================*/
 
-class WebView extends Component {
+/*=============================================
+=            Item            =
+=============================================*/
+class Item extends Component {
   render() {
-    var activeUrl = this.props.store.activeUrl
-    var isActive = this.props.active
+    var item = this.props.item
     return (
-      <div className={"webview " + (isActive
-        ? "active"
-        : "")}>
-        {activeUrl}
+      <div className="item">
+        <img className="item-img" src={item.img} alt={item.text}/>
+        <p>{item.text}</p>
+        <p>{item.price}</p>
+        <a href={item.link} target="_blank">Link</a>
       </div>
     )
   }
 }
 
-class WebViews extends Component {
+/*=============================================
+=            View            =
+=============================================*/
+class View extends Component {
   render() {
-    var listView = this.props.stores.map((store) =>{
-      var active = false
-      if(this.props.activeStore.name === store.name) {
-        active = true
-      }
-      return <WebView store={store} key={store.name} active={active}/>
+    var store = this.props.store
+    var listItems = store.items.map((item) =>{
+      return (
+        <Item item={item} id={item.id}  key={item.id}/>
+      )
     })
+    let loading = "" ;
+    if(store.loading === 0 || store.loading === undefined) {
+      loading = ""
+    }
+    else {
+      loading = "loading"
+      if(store.id === 0)  loading = "still-loading"
+    } 
     return (
-      <div className="webviews">
-        {listView}
+      <div className={"view" + loading } >
+        {listItems}
+        <div className="loader">{loading}</div>
       </div>
     )
   }
 }
 
 /*=============================================
-=            StoreBar            =
+=            Tab            =
 =============================================*/
-class StoreTab extends Component {
+class Tab extends Component {
   constructor(props){
     super(props)
-
-    this.handleClick = this.handleClick.bind(this)
-    this.store = this.props.store
+    this.onClick = this.onClick.bind(this)
   }
-  handleClick(e){
-    this.props.onStoreSelected(this.store)
+  onClick(event){
+    this.props.onClick(this.props.store)
   }
   render() {
     var store = this.props.store
     var isActive = this.props.active;
+    
+    var parser = document.createElement('a');
+    parser.href = this.props.store.url;
+    //var loading = <i className="loading fa fa-spinner fa-spin"></i>
+    var icon = <img className="favicon" src={ "https://icons.better-idea.org/icon?url="+ parser.hostname +"&size=16..20..200&formats=ico" } alt={store.name}/>
+    
     return (
-      <li className={"tab " + (isActive ? "active" : "")} onClick={this.handleClick}>
-        {store.name}
+      <li className={"tab " + (isActive ? "active" : "")} onClick={this.onClick}>
+         {icon} <span className="storename">{store.name}</span>
       </li>
     )
   }
 }
 
-class StoreBar extends Component {
+/*=============================================
+=            TabBar            =
+=============================================*/
+
+class TabBar extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      activeStore : this.props.activeStores[0]
+    }
+    this.onTabClick = this.onTabClick.bind(this)
+  }
+  onTabClick(store){
+    this.setState({
+      activeStore: store
+    })
+  }
   render() {
-    var listTab = this.props.stores.map((store) => {
-      var active = false
-      if(this.props.activeStore.name === store.name) {
-        active = true
-      }
-      return <StoreTab store={store} key={store.name} active={active} onStoreSelected={this.props.onStoreSelected}/>
+    var activeStores = this.props.activeStores
+    var listTab = activeStores.map((store) => {
+        return <Tab store={store} 
+        key={store.id} 
+        active={this.state.activeStore === store ? true:false} 
+        onClick={this.onTabClick}/>
     })
     return (
-      <ul>
-        {listTab}
-      </ul>
-    )
-  }
-}
-
-/*=============================================
-=            MainView            =
-=============================================*/
-class MainView extends Component {
-  render() {
-    return (
-      <div className="mainview">
-        <StoreBar stores={this.props.stores} activeStore={this.props.activeStore} onStoreSelected={this.props.onStoreSelected}/>
-        <WebViews stores={this.props.stores} activeStore={this.props.activeStore} />
+      <div className="tabbar">
+        <ul className="tabs">
+          {listTab}
+        </ul>
+        <View store={this.state.activeStore} />
       </div>
     )
   }
@@ -98,7 +118,6 @@ class MainView extends Component {
 class SearchBar extends Component {
   constructor(props){
     super(props)
-
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -111,8 +130,11 @@ class SearchBar extends Component {
   }
   render() {
     return (
-      <form className="SearchBar" onSubmit={this.handleSubmit}>
-        <input type="search" name="q" placeholder="search..." onChange={this.handleChange}/>
+      <form className="searchbar" onSubmit={this.handleSubmit}>
+        <input type="search" className="search-input" name="q" placeholder="search..." onChange={this.handleChange}/>
+        <button className="search-button" type="submit">
+          <i className="fa fa-search" aria-hidden="true"></i>
+        </button>
       </form>
     )
   }
@@ -136,22 +158,22 @@ class Option extends Component {
   }
   render() {
     return (
-      <li onClick={this.handleClick}>{this.option}</li>
+      <li className="select-option" onClick={this.handleClick}>{this.option}</li>
     )
   }
 }
 
 class Options extends Component {
   render() {
-    var options = this
-      .props
-      .options
-      .map((option) => <Option
+    var options = this.props.options.map((option) => <Option
         option={option}
         onOptionSelected={this.props.onOptionSelected}
-        key={option}/>)
+        key={option} />)
+    if(!this.props.show) {
+      return null;
+    }
     return (
-      <ul className="options">
+      <ul className="select-options">
         {options}
       </ul>
     )
@@ -159,24 +181,53 @@ class Options extends Component {
 }
 
 class Select extends Component {
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick(e) {
+     this.props.onClick(e)
+  }
   render() {
     var activeOption = this.props.activeOption
     return (
-      <div className="select">
-        {activeOption}
-      </div>
+    <div className="select" onClick={this.handleClick}>
+      <input className="select-input" value={activeOption} readOnly="true"/>
+      <button className="select-button">
+      <i className="fa fa-chevron-down" aria-hidden="true"></i>
+      </button>
+    </div>
     )
   }
 }
 
 class SelectBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showOptions: false
+    }
+    this.displayOptions = this.displayOptions.bind(this)
+    this.onOptionSelected = this.onOptionSelected.bind(this)
+  }
+  displayOptions(e) {
+    this.setState((prevState, props) => ({
+      showOptions: !prevState.showOptions
+    }))
+  }
+  onOptionSelected(option) {
+    this.displayOptions();
+    this.props.onOptionSelected(option)
+  }
   render() {
     return (
       <div className="selectbar">
-        <Select activeOption={this.props.activeOption}/>
+        <Select activeOption={this.props.activeOption} onClick={this.displayOptions} />
         <Options
           options={this.props.options}
-          onOptionSelected={this.props.onOptionSelected}/>
+          onOptionSelected={this.onOptionSelected}
+          show={this.state.showOptions}
+        />
       </div>
     )
   }
@@ -190,49 +241,67 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      query: '',
-      activeCategory: 'General',
+      activeCategory: 'Women',
+      query: '',      
     }
-    this.fetchData()
 
+    this.fetchStores = this.fetchStores.bind(this)
     this.onOptionSelected = this.onOptionSelected.bind(this)
-    this.onStoreSelected = this.onStoreSelected.bind(this)
     this.onQuery = this.onQuery.bind(this)
     this.onSearch = this.onSearch.bind(this)
+    this.fetchItems = this.fetchItems.bind(this)
+    /* Categories & Stores */
+    this.categories = CATEGORIES
+    this.fetchStores()
   }
 
-  fetchData(){
-    var request = "/api/categories/"
-    var stores = {}
+  fetchStores(){
+    var request = "api/stores"
     fetch(request)
         .then(function(response){
           return response.json()
         })
-        .then((data) => {
-          data.forEach((category) => {
-            category.stores.forEach((store)=>{
-              store.activeUrl = store.url
-            })
-            stores[category.name] = category.stores
-          })
-        this.setState((prevState) => ({
-          stores: stores,
-          categories: Object.keys(stores),
-          activeStores: stores[prevState.activeCategory],
-          activeStore: stores[prevState.activeCategory][0],
-        }))
+        .then((remoteStores) => {
+          /* All Store */
+          let AllStore = {
+            id: 0,
+            name: 'All',
+            favicon: '',
+            url: 'http://www.storesbrowser.com',
+            items: []
+          }
+          remoteStores.unshift(AllStore)
+          this.setState((prevState) => ({
+            activeStores: remoteStores.slice(0, 10)
+          }))
+        })
+  }
+  fetchItems(store) {
+    let query = encodeURI(this.state.query)
+    let id = store['id']
+    let request = `api/search?q=${query}&id=${id}`
+    console.log(request)
+    fetch(request)
+    .then(function(response){
+      return response.json()
+    })
+    .then((items) => {
+      let activeStores = this.state.activeStores
+      let currentStore = get(store['id'], activeStores)
+      let allStore = activeStores[0]
+      allStore['items'] = allStore['items'].concat(items.slice(0,20))
+      currentStore['items'] = items
+      /* Loading Callback */
+      currentStore['loading'] = 0
+      allStore['loading'] = allStore['loading'] - 1
+      this.setState({
+        activeStores: activeStores
       })
+    })
   }
   onOptionSelected(option) {
-    this.setState((prevState) =>({
-      activeCategory: option,
-      activeStores: prevState.stores[option],
-      activeStore: prevState.stores[option][0]
-    }))
-  }
-  onStoreSelected(store) {
     this.setState({
-      activeStore: store
+      activeCategory: option,
     })
   }
   onQuery(query) {
@@ -241,51 +310,94 @@ class App extends Component {
     })
   }
   onSearch(){
-    var activeStores = this.state.activeStores
-    activeStores.forEach((store)=>{
-      store.activeUrl = store.search + this.state.query
-    })
-    this.setState({
-      activeStores: activeStores
-    })
+    if(this.state.query !== "") {
+      /*initalize AllStore */
+      let activeStores = this.state.activeStores
+      let allStore = activeStores[0]
+      allStore['items'] = []
+      allStore['loading'] = activeStores.length - 1
+      this.setState({
+        activeStores: activeStores
+      })
+      for(var i=1; i<activeStores.length; i++) {
+        activeStores[i]['loading'] = 1
+        this.fetchItems(activeStores[i])
+      }
+      this.setState({
+        activeStores: activeStores
+      })
+    }
   }
+
   render() {
-    if(!this.state.stores) {
+    if(!this.state.activeStores) {
       return null
     }
-    var activeStores = this.state.activeStores
-    var activeStore = this.state.activeStore
+    //console.log(this.state.activeStores)    
     return (
-      <div className="App">
-        <header>
-          <SearchBar
-            onQuery={this.onQuery}
-            onSearch={this.onSearch}
-          />
-          <SelectBar
-            options={this.state.categories}
-            activeOption={this.state.activeCategory}
-            onOptionSelected={this.onOptionSelected}/>
+      <div className="app">
+        <header className="header">
+          <div className="topbar">
+            <SearchBar
+              onQuery={this.onQuery}
+              onSearch={this.onSearch}
+            />
+            <SelectBar
+              options={this.categories}
+              activeOption={this.state.activeCategory}
+              onOptionSelected={this.onOptionSelected} />
+          </div>
         </header>
-        <MainView stores={activeStores} activeStore={activeStore} onStoreSelected={this.onStoreSelected}/>
+        <main>
+          <TabBar
+            activeStores={this.state.activeStores} />
+        </main>
       </div>
     );
   }
 }
 
-/*
-var CATEGORIES = ["General", "Clothing"]
 
+/*=============================================
+=            Data            =
+=============================================*/
+var CATEGORIES = [
+    'Women',
+    'Men',
+    'Girls',
+    'Boys',
+    'Baby'
+]
+
+/*
 var STORES = [
   {
+    id: 0,
     name: "Amazon",
     url: "https://www.amazon.com/",
-    isActive: true
+    items: [
+      { 'id': 0,
+        'text': 'amazon jean'}
+    ]
   }, {
+    id: 1,
     name: "ebay",
     url: "https://www.ebay.com/",
-    isActive: false
+    items: [
+      { 'id': 1,
+        'text': 'ebay jean'}
+    ]
   }
 ]
 */
+
+function get(id, stores) {
+  for(var i =0; i < stores.length; i++) {
+    if(stores[i].id === id) {
+      return stores[i]
+    }
+  }
+}
+
 export default App;
+
