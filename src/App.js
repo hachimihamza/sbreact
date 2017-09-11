@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
-
+import logo from './img/logo.ico';
 
 /*=============================================
 =            Item            =
@@ -32,7 +32,7 @@ class View extends Component {
       )
     })
     let loading = "" ;
-    if(store.loading === 0 || store.loading === undefined) {
+    if(store.loading === 0) {
       loading = ""
     }
     else {
@@ -40,9 +40,9 @@ class View extends Component {
       if(store.id === 0)  loading = "still-loading"
     } 
     return (
-      <div className={"view" + loading } >
+      <div className={"view " + loading } >
         {listItems}
-        <div className="loader">{loading}</div>
+        <div className="loader"></div>
       </div>
     )
   }
@@ -130,10 +130,10 @@ class SearchBar extends Component {
   }
   render() {
     return (
-      <form className="searchbar" onSubmit={this.handleSubmit}>
+      <form className="searchbar" onSubmit={this.handleSubmit}>          <img className="search-logo" src={logo} alt="logo" />
         <input type="search" className="search-input" name="q" placeholder="search..." onChange={this.handleChange}/>
         <button className="search-button" type="submit">
-          <i className="fa fa-search" aria-hidden="true"></i>
+          <i className="fa fa-search fa-lg" aria-hidden="true"></i>
         </button>
       </form>
     )
@@ -192,9 +192,9 @@ class Select extends Component {
     var activeOption = this.props.activeOption
     return (
     <div className="select" onClick={this.handleClick}>
-      <input className="select-input" value={activeOption} readOnly="true"/>
+      <div className="select-input">{activeOption}</div>
       <button className="select-button">
-      <i className="fa fa-chevron-down" aria-hidden="true"></i>
+      <i className="fa fa-chevron-down fa-lg" aria-hidden="true"></i>
       </button>
     </div>
     )
@@ -242,7 +242,8 @@ class App extends Component {
     super(props)
     this.state = {
       activeCategory: 'Women',
-      query: '',      
+      query: '',
+      currentSearch: '',      
     }
 
     this.fetchStores = this.fetchStores.bind(this)
@@ -250,11 +251,14 @@ class App extends Component {
     this.onQuery = this.onQuery.bind(this)
     this.onSearch = this.onSearch.bind(this)
     this.fetchItems = this.fetchItems.bind(this)
+    this.onScroll = this.onScroll.bind(this)
     /* Categories & Stores */
     this.categories = CATEGORIES
     this.fetchStores()
   }
-
+  componentDidMount(){
+    window.addEventListener("scroll", this.onScroll)
+  }
   fetchStores(){
     var request = "api/stores"
     fetch(request)
@@ -262,14 +266,20 @@ class App extends Component {
           return response.json()
         })
         .then((remoteStores) => {
-          /* All Store */
+          /* AllStore Special Store */
           let AllStore = {
             id: 0,
             name: 'All',
             favicon: '',
             url: 'http://www.storesbrowser.com',
-            items: []
+            items: [],
+            loading: 0
           }
+          /* Addtional Properties */
+          remoteStores.forEach(function(store) {
+            store['loading'] = 0
+          }, this);
+
           remoteStores.unshift(AllStore)
           this.setState((prevState) => ({
             activeStores: remoteStores.slice(0, 10)
@@ -310,14 +320,16 @@ class App extends Component {
     })
   }
   onSearch(){
-    if(this.state.query !== "") {
+    if(this.state.query !== "" 
+    && this.state.query !== this.state.currentSearch) {
       /*initalize AllStore */
       let activeStores = this.state.activeStores
       let allStore = activeStores[0]
       allStore['items'] = []
       allStore['loading'] = activeStores.length - 1
       this.setState({
-        activeStores: activeStores
+        activeStores: activeStores,
+        currentSearch: this.state.query
       })
       for(var i=1; i<activeStores.length; i++) {
         activeStores[i]['loading'] = 1
@@ -328,6 +340,18 @@ class App extends Component {
       })
     }
   }
+  onScroll(e){
+    let height = document.querySelector(".header").offsetHeight
+    let app = document.querySelector(".app")
+    let scrollTop = document.documentElement.scrollTop
+    if(scrollTop > height ) {
+      //console.log("scrolled")
+      app.classList.add("scrolled")
+    } else {
+      //console.log("no")
+      app.classList.remove("scrolled")
+    }
+  }
 
   render() {
     if(!this.state.activeStores) {
@@ -335,7 +359,7 @@ class App extends Component {
     }
     //console.log(this.state.activeStores)    
     return (
-      <div className="app">
+      <div className="app" onScroll={this.onScroll} >
         <header className="header">
           <div className="topbar">
             <SearchBar
@@ -348,7 +372,7 @@ class App extends Component {
               onOptionSelected={this.onOptionSelected} />
           </div>
         </header>
-        <main>
+        <main className="main">
           <TabBar
             activeStores={this.state.activeStores} />
         </main>

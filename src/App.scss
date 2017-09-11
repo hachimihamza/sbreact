@@ -9,9 +9,10 @@ $grey: #9e9e9e;
 $blue: #0d47a1;
 $white: #fff;
 
-$xs-padding: 3px;
-$sm-padding: 6px;
+$xs-padding: 6px;
+$sm-padding: 10px;
 $md-padding: 10px;
+$sm-margin: 1em;
 $md-margin: 1em;
 
 * {
@@ -26,10 +27,13 @@ html, body, #root {
   outline: 0;
 }
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+
   font-family: sans-serif;
-  font-size: 13px;
+  font-size: 14px;
 }
 .app .header {
   background: $white;
@@ -44,9 +48,11 @@ html, body, #root {
 =============================================*/
 .card {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+.card-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
 
 
 /*=============================================
@@ -69,7 +75,9 @@ html, body, #root {
   border: 1px solid $blue;
   border-right: 0; 
 }
-
+.logo {
+  height: 100%;
+}
 
 
 /*=============================================
@@ -80,15 +88,14 @@ html, body, #root {
   position: relative;
   margin-right: $md-margin;
   border: 1px solid $blue;
-  transition: border 1s;    
+  transition: border 1s;
 }
 .search-input {
   width: 100%;
   //height: 30px;
-  padding: $sm-padding;
+  padding: $sm-padding 47px;; 
   outline: 0;
   border: 0;
-  font-size: 13px;
 }
 .search-button {
   position: absolute;
@@ -100,7 +107,17 @@ html, body, #root {
   background: $white;
   outline: 0;
 }
-
+.search-logo {
+  position: absolute;
+  left:0;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  color: $blue;
+  background: $white;
+  outline: 0;
+  height: 100%;
+}
 .searchbar:focus, .searchbar:hover {
   //border: 2px solid $blue;
   outline: 0;
@@ -112,12 +129,12 @@ html, body, #root {
 .selectbar {
   width: 30%;
   position: relative;
-
+  cursor: pointer;
 }
 .selectbar .select {
   position: relative;
   border: 1px solid $blue;
-  transition: border 1s; 
+  transition: border 1s;
 }
 
 .select-options {
@@ -144,7 +161,12 @@ html, body, #root {
   background: $silver;
 }
 .select-input {
-  @extend .search-input;
+  width: 100%;
+  //height: 30px;
+  padding: $sm-padding;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
 }
 .select-button {
   @extend .search-button;
@@ -153,11 +175,17 @@ html, body, #root {
 /*=============================================
 =            tabbar            =
 =============================================*/
+.tabbar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 .tabs {
   display: flex;
   margin: 0;
   padding: 0;
   overflow-x: auto;
+  @extend .card
 }
 .tab {
   flex: 1;
@@ -169,6 +197,7 @@ html, body, #root {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  cursor: pointer;
 }
 .tab.active {
   border-bottom: 2px solid $blue;
@@ -186,23 +215,75 @@ html, body, #root {
 .tab .loading {
   vertical-align: middle;
 }
+
+ /* Tabs on Scroll */
+.app.scrolled  .tabs {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: $white;
+}
+.app.scrolled .view {
+   margin-top: 3 + $md-margin;
+ }
+
+
 /*=============================================
-=            MainView            =
+=            View            =
 =============================================*/
 .view {
+  flex: 1;  
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: $md-padding;
 }
+
+.view .loader {
+  display: none;
+}
+
+.view.loading .loader {
+  display: block;
+}
+
+.view.still-loading .loader {
+  display: block;
+}
+
+
+/*=============================================
+=            loader            =
+=============================================*/
+.loader {
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto; 
+  border: 5px solid $silver;
+  border-top: 5px solid $blue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg)}
+}
+
 
 /*=============================================
 =            Item            =
 =============================================*/
 .item {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+  margin: $sm-margin;
+  @extend .card;
 }
 .item-img {
   width: auto;
+  max-width: 300px;
   height: 300px;
 }
 

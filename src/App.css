@@ -404,10 +404,12 @@ html, body, #root {
   outline: 0; }
 
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   font-family: sans-serif;
-  font-size: 13px; }
+  font-size: 14px; }
 
 .app .header {
   background: #fff; }
@@ -418,16 +420,18 @@ html, body, #root {
 /*=============================================
 =            card            =
 =============================================*/
-.card, .select-options {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.card, .select-options, .tabs, .item {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+.card-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 /*=============================================
 =            TopBar            =
 =============================================*/
 .topbar {
   display: flex;
-  padding: 6px; }
+  padding: 10px; }
 
 /*=============================================
 =            Controls            =
@@ -440,6 +444,9 @@ html, body, #root {
   border: 1px solid #0d47a1;
   border-right: 0; }
 
+.logo {
+  height: 100%; }
+
 /*=============================================
 =            SearchBar            =
 =============================================*/
@@ -450,12 +457,11 @@ html, body, #root {
   border: 1px solid #0d47a1;
   transition: border 1s; }
 
-.search-input, .select-input {
+.search-input {
   width: 100%;
-  padding: 6px;
+  padding: 10px 47px;
   outline: 0;
-  border: 0;
-  font-size: 13px; }
+  border: 0; }
 
 .search-button, .select-button {
   position: absolute;
@@ -467,6 +473,17 @@ html, body, #root {
   background: #fff;
   outline: 0; }
 
+.search-logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  color: #0d47a1;
+  background: #fff;
+  outline: 0;
+  height: 100%; }
+
 .searchbar:focus, .searchbar:hover {
   outline: 0; }
 
@@ -475,7 +492,8 @@ html, body, #root {
 =============================================*/
 .selectbar {
   width: 30%;
-  position: relative; }
+  position: relative;
+  cursor: pointer; }
 
 .selectbar .select {
   position: relative;
@@ -496,14 +514,26 @@ html, body, #root {
 .select-option {
   display: block;
   background: #fff;
-  padding: 6px 6px; }
+  padding: 10px 10px; }
 
 .select-option:hover {
   background: #e0e0e0; }
 
+.select-input {
+  width: 100%;
+  padding: 10px;
+  outline: 0;
+  border: 0;
+  cursor: pointer; }
+
 /*=============================================
 =            tabbar            =
 =============================================*/
+.tabbar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; }
+
 .tabs {
   display: flex;
   margin: 0;
@@ -512,13 +542,14 @@ html, body, #root {
 
 .tab {
   flex: 1;
-  padding: 6px 6px;
+  padding: 10px 10px;
   list-style-type: none;
   text-transform: capitalize;
   border-bottom: 2px solid #fff;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden; }
+  overflow: hidden;
+  cursor: pointer; }
 
 .tab.active {
   border-bottom: 2px solid #0d47a1; }
@@ -535,20 +566,64 @@ html, body, #root {
 .tab .loading {
   vertical-align: middle; }
 
+/* Tabs on Scroll */
+.app.scrolled .tabs {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff; }
+
+.app.scrolled .view {
+  margin-top: 4em; }
+
 /*=============================================
-=            MainView            =
+=            View            =
 =============================================*/
 .view {
+  flex: 1;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; }
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 10px; }
+
+.view .loader {
+  display: none; }
+
+.view.loading .loader {
+  display: block; }
+
+.view.still-loading .loader {
+  display: block; }
+
+/*=============================================
+=            loader            =
+=============================================*/
+.loader {
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0d47a1;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
 
 /*=============================================
 =            Item            =
 =============================================*/
 .item {
-  width: 400px; }
+  width: 100%;
+  max-width: 400px;
+  margin: 1em; }
 
 .item-img {
   width: auto;
+  max-width: 300px;
   height: 300px; }
