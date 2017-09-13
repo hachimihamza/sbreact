@@ -9,6 +9,9 @@ $grey: #9e9e9e;
 $blue: #0d47a1;
 $white: #fff;
 $black: #000;
+$red: #f44336;
+$green: #4caf50;
+
 $xs-padding: 0.5rem;
 $sm-padding: 1rem;
 $md-padding: 1rem;
@@ -54,6 +57,18 @@ html, body, #root {
 .card-2 {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
 
 
 /*=============================================
@@ -212,7 +227,7 @@ html, body, #root {
 .tab .storename {
   vertical-align: middle;
 }
-.tab .favicon {
+.favicon {
   height: 16px;
   width: 16px;
   color: $blue;
@@ -221,7 +236,9 @@ html, body, #root {
 .tab .loading {
   vertical-align: middle;
 }
-
+.tab.add .fa{
+  color: $blue;
+}
  /* Tabs on Scroll */
 .tabs.fixed {
   position: fixed;
@@ -337,6 +354,73 @@ html, body, #root {
 }
 
 
+/*=============================================
+=            StoresManager            =
+=============================================*/
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0, 0.1);
+}
+.close-modal {
+  color: $red;
+  padding: $xs-padding;
+  margin-bottom: $sm-margin;
+  background: $white;
+  border: 0;
+}
+.store-manager {
+  margin: 10% auto;
+  padding: $md-padding;
+  width: 100%;
+  max-height: 500px;
+  max-width: 400px;
+  background: $white;
+  overflow: auto;
+  text-align: right;
+  @extend .card-5;
+}
+
+
+/*----------  Store row  ----------*/
+.store-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: $sm-padding;
+}
+.store-row:hover {
+  background: $silver;
+}
+.store-row button {
+  background: transparent;
+  border: 0;
+  padding: $xs-padding;
+  cursor: pointer;
+  outline: 0;
+}
+.store-row .add {
+  color: $green;  
+}
+.store-row .remove {
+  color: $red;
+}
+
+/*----------  store search  ----------*/
+.store-search {
+  margin-bottom: $sm-margin;
+}
+
+.store-search input {
+  width: 100%;
+  padding: $sm-padding; 
+  outline: 0;
+  border: 1px solid $blue;
+}
 
 
 

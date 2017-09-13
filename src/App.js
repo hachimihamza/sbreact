@@ -120,6 +120,9 @@ class TabBar extends Component {
       <div id="tabbar" className="tabbar">
         <ul className="tabs">
           {listTab}
+          <div className="tab add" onClick={this.props.showSM}>
+            <i className="fa fa-plus"></i> Add new store
+          </div>
         </ul>
         <View store={this.state.activeStore} />
       </div>
@@ -258,7 +261,8 @@ class App extends Component {
     this.state = {
       activeCategory: 'Women',
       query: '',
-      currentSearch: '',      
+      currentSearch: '',
+      storesManager: false      
     }
 
     this.fetchStores = this.fetchStores.bind(this)
@@ -267,6 +271,10 @@ class App extends Component {
     this.onSearch = this.onSearch.bind(this)
     this.fetchItems = this.fetchItems.bind(this)
     this.onScroll = this.onScroll.bind(this)
+    this.addStore = this.addStore.bind(this)
+    this.removeStore = this.removeStore.bind(this)
+    this.showModal = this.showModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
     /* Categories & Stores */
     this.categories = CATEGORIES
     this.fetchStores()
@@ -297,7 +305,8 @@ class App extends Component {
 
           remoteStores.unshift(AllStore)
           this.setState((prevState) => ({
-            activeStores: remoteStores.slice(0, 10)
+            activeStores: remoteStores.slice(0, 2),
+            stores: remoteStores.slice(1)
           }))
         })
   }
@@ -370,7 +379,31 @@ class App extends Component {
       tabs.classList.remove("fixed")
     }
   }
-
+  addStore(store) {
+    var activeStores = this.state.activeStores
+    activeStores.push(store)
+    this.setState({
+      activeStores: activeStores
+    })
+  }
+  removeStore(store){
+    var activeStores = this.state.activeStores
+    var index = activeStores.indexOf(store)
+    activeStores.splice(index, 1)
+    this.setState({
+      activeStores: activeStores
+    })
+  }
+  showModal(){
+    this.setState({
+      storesManager: true
+    })
+  }
+  closeModal(){
+    this.setState({
+      storesManager: false
+    })
+  }
   render() {
     if(!this.state.activeStores) {
       return null
@@ -392,8 +425,18 @@ class App extends Component {
         </header>
         <main className="main">
           <TabBar
-            activeStores={this.state.activeStores} />
+            activeStores={this.state.activeStores} 
+            showSM={this.showModal}
+            />
         </main>
+        <StoreManager
+          show={this.state.storesManager} 
+          stores={this.state.stores} 
+          activeStores={this.state.activeStores} 
+          onAdd={this.addStore}
+          onRemove={this.removeStore}
+          closeModal={this.closeModal}
+          />
       </div>
     );
   }
@@ -411,6 +454,22 @@ var CATEGORIES = [
     'Baby'
 ]
 
+
+function get(id, stores) {
+  for(var i =0; i < stores.length; i++) {
+    if(stores[i].id === id) {
+      return stores[i]
+    }
+  }
+}
+
+function favicon(store) {
+  var parser = document.createElement('a');
+  parser.href = store.url;
+  //var loading = <i className="loading fa fa-spinner fa-spin"></i>
+  var icon = <img className="favicon" src={ "https://icons.better-idea.org/icon?url="+ parser.hostname +"&size=16..20..200&formats=ico" } alt={store.name}/>
+  return icon
+}
 /*
 var STORES = [
   {
@@ -433,13 +492,105 @@ var STORES = [
 ]
 */
 
-function get(id, stores) {
-  for(var i =0; i < stores.length; i++) {
-    if(stores[i].id === id) {
-      return stores[i]
+/*=============================================
+=            Stores Manager            =
+=============================================*/
+class StoreSearch extends Component {
+  render(){
+    return(
+      <div className="store-search">
+        <input type="search" name="search" placeholder="Find a store..." onChange={this.props.onChange} autoComplete="off"/>
+      </div>
+    )
+  }
+} 
+
+class StoreRow extends Component {
+  constructor(props){
+    super(props)
+    this.onAdd = this.onAdd.bind(this)
+    this.onRemove = this.onRemove.bind(this)
+  }
+  onAdd(){
+    this.props.onAdd(this.props.store)
+  }
+  onRemove(){
+    this.props.onRemove(this.props.store)
+  }
+  render() {
+    let add = ( 
+      <button className="add button" onClick={this.onAdd}>
+        <i className="fa fa-plus"></i> Add
+      </button>
+    )
+    let remove = (
+      <button className="remove button" onClick={this.onRemove}>
+        <i className="fa fa-minus"></i> Remove
+      </button>
+    )
+    let button = add
+    if(this.props.activeStores.indexOf(this.props.store) !== -1) {
+      button = remove
     }
+    return (
+      <div className="store-row">
+        <div className="store">
+          {favicon(this.props.store)} {this.props.store.name}
+        </div>
+        <div>
+        {button}
+        </div>    
+      </div>
+    )
   }
 }
 
+class StoreManager extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      query: ''
+    }
+    this.onChange = this.onChange.bind(this)
+  }
+  onChange(e){
+    this.setState({
+      query: e.target.value.toLowerCase()
+    })
+  }
+  render() {
+    if(!this.props.show){
+      return null
+    }
+    var listRows = this.props.stores.map((store) =>{
+        if ( store.name.toLowerCase().indexOf(this.state.query) !== -1){
+          return <StoreRow store={store} 
+          onAdd={this.props.onAdd}
+          onRemove={this.props.onRemove}
+          activeStores={this.props.activeStores}
+          />          
+        }
+        return ""
+    })
+    return (
+      <div className="modal">
+        <div className="store-manager">
+          <button className="close-modal" onClick={this.props.closeModal}>
+            <i className="fa fa-close"></i> Close
+          </button>
+          <StoreSearch onChange={this.onChange} />
+          {listRows}
+        </div>
+      </div>
+    )
+  }
+}
+
+
+/*=====  End of Stores Manager  ======*/
+
+
+
 export default App;
+
 

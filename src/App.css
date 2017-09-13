@@ -427,6 +427,15 @@ html, body, #root {
 .card-2 {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+.card-5, .store-manager {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
 /*=============================================
 =            TopBar            =
 =============================================*/
@@ -562,7 +571,7 @@ html, body, #root {
 .tab .storename {
   vertical-align: middle; }
 
-.tab .favicon {
+.favicon {
   height: 16px;
   width: 16px;
   color: #0d47a1;
@@ -570,6 +579,9 @@ html, body, #root {
 
 .tab .loading {
   vertical-align: middle; }
+
+.tab.add .fa {
+  color: #0d47a1; }
 
 /* Tabs on Scroll */
 .tabs.fixed {
@@ -675,3 +687,65 @@ html, body, #root {
 
 .item-link {
   color: #0d47a1; }
+
+/*=============================================
+=            StoresManager            =
+=============================================*/
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.close-modal {
+  color: #f44336;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 0; }
+
+.store-manager {
+  margin: 10% auto;
+  padding: 1rem;
+  width: 100%;
+  max-height: 500px;
+  max-width: 400px;
+  background: #fff;
+  overflow: auto;
+  text-align: right; }
+
+/*----------  Store row  ----------*/
+.store-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1rem; }
+
+.store-row:hover {
+  background: #e0e0e0; }
+
+.store-row button {
+  background: transparent;
+  border: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+  outline: 0; }
+
+.store-row .add {
+  color: #4caf50; }
+
+.store-row .remove {
+  color: #f44336; }
+
+/*----------  store search  ----------*/
+.store-search {
+  margin-bottom: 1rem; }
+
+.store-search input {
+  width: 100%;
+  padding: 1rem;
+  outline: 0;
+  border: 1px solid #0d47a1; }
