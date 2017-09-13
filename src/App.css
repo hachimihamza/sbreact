@@ -401,7 +401,8 @@ html, body, #root {
   margin: 0;
   padding: 0;
   border: 0;
-  outline: 0; }
+  outline: 0;
+  font-size: 10px; }
 
 .app {
   position: relative;
@@ -431,13 +432,13 @@ html, body, #root {
 =============================================*/
 .topbar {
   display: flex;
-  padding: 10px; }
+  padding: 1rem; }
 
 /*=============================================
 =            Controls            =
 =============================================*/
 .ctrl-btn {
-  padding: 0 10px;
+  padding: 0 1rem;
   color: #0d47a1;
   background: #fff;
   outline: 0;
@@ -453,13 +454,13 @@ html, body, #root {
 .searchbar {
   width: 70%;
   position: relative;
-  margin-right: 1em;
+  margin-right: 1rem;
   border: 1px solid #0d47a1;
   transition: border 1s; }
 
 .search-input {
   width: 100%;
-  padding: 10px 47px;
+  padding: 1rem 47px;
   outline: 0;
   border: 0; }
 
@@ -514,14 +515,14 @@ html, body, #root {
 .select-option {
   display: block;
   background: #fff;
-  padding: 10px 10px; }
+  padding: 1rem 1rem; }
 
 .select-option:hover {
   background: #e0e0e0; }
 
 .select-input {
   width: 100%;
-  padding: 10px;
+  padding: 1rem;
   outline: 0;
   border: 0;
   cursor: pointer; }
@@ -530,6 +531,7 @@ html, body, #root {
 =            tabbar            =
 =============================================*/
 .tabbar {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100%; }
@@ -542,13 +544,16 @@ html, body, #root {
 
 .tab {
   flex: 1;
-  padding: 10px 10px;
+  padding: 1rem 1rem;
   list-style-type: none;
   text-transform: capitalize;
   border-bottom: 2px solid #fff;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  text-decoration: none;
+  color: #000;
+  outline: 0;
   cursor: pointer; }
 
 .tab.active {
@@ -567,14 +572,14 @@ html, body, #root {
   vertical-align: middle; }
 
 /* Tabs on Scroll */
-.app.scrolled .tabs {
+.tabs.fixed {
   position: fixed;
   top: 0;
   width: 100%;
   background: #fff; }
 
-.app.scrolled .view {
-  margin-top: 4em; }
+.tabs.fixed + .view {
+  margin-top: 4rem; }
 
 /*=============================================
 =            View            =
@@ -584,7 +589,7 @@ html, body, #root {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  padding: 10px; }
+  padding: 1rem; }
 
 .view .loader {
   display: none; }
@@ -619,11 +624,54 @@ html, body, #root {
 =            Item            =
 =============================================*/
 .item {
+  display: flex;
+  flex-flow: column nowrap;
   width: 100%;
   max-width: 400px;
-  margin: 1em; }
+  margin: 1rem;
+  padding: 1rem; }
 
-.item-img {
+.item-description {
+  display: block;
+  flex: 1;
+  text-decoration: none;
+  outline: 0; }
+
+.item-image {
+  text-align: center; }
+
+.item-image img {
   width: auto;
   max-width: 300px;
   height: 300px; }
+
+.item-price {
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #0d47a1; }
+
+.item-text {
+  padding: 0.5rem;
+  color: #303030;
+  font-size: 1.3rem;
+  line-height: 2rem; }
+
+.item-controls {
+  display: none;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem; }
+
+.item-add {
+  padding: 1rem;
+  border: 0;
+  background: #fff;
+  border-radius: 50%;
+  color: #0d47a1;
+  cursor: pointer;
+  outline: 0; }
+
+.item-link {
+  color: #0d47a1; }

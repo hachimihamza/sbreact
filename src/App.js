@@ -11,10 +11,25 @@ class Item extends Component {
     var item = this.props.item
     return (
       <div className="item">
-        <img className="item-img" src={item.img} alt={item.text}/>
-        <p>{item.text}</p>
-        <p>{item.price}</p>
-        <a href={item.link} target="_blank">Link</a>
+        <a href={item.link} className="item-description" target="_blank">
+          <div className="item-image">
+            <img className="item-img" src={item.img} alt={item.text}/>
+          </div>
+          <div className="item-price">
+            {item.price}
+          </div>
+          <div className="item-text">  
+            {item.text}
+          </div>
+        </a>
+        <div className="item-controls">
+          <div className="item-add">
+            <i className="fa fa-plus"></i>
+          </div>
+          <div className="item-link">
+            <a href={item.link} className="link" target="_blank">More</a>
+          </div>
+        </div>
       </div>
     )
   }
@@ -40,7 +55,7 @@ class View extends Component {
       if(store.id === 0)  loading = "still-loading"
     } 
     return (
-      <div className={"view " + loading } >
+      <div id="view" className={"view " + loading } >
         {listItems}
         <div className="loader"></div>
       </div>
@@ -69,9 +84,9 @@ class Tab extends Component {
     var icon = <img className="favicon" src={ "https://icons.better-idea.org/icon?url="+ parser.hostname +"&size=16..20..200&formats=ico" } alt={store.name}/>
     
     return (
-      <li className={"tab " + (isActive ? "active" : "")} onClick={this.onClick}>
+      <a href="#tabbar" className={"tab " + (isActive ? "active" : "")} onClick={this.onClick}>
          {icon} <span className="storename">{store.name}</span>
-      </li>
+      </a>
     )
   }
 }
@@ -102,7 +117,7 @@ class TabBar extends Component {
         onClick={this.onTabClick}/>
     })
     return (
-      <div className="tabbar">
+      <div id="tabbar" className="tabbar">
         <ul className="tabs">
           {listTab}
         </ul>
@@ -344,12 +359,15 @@ class App extends Component {
     let height = document.querySelector(".header").offsetHeight
     let app = document.querySelector(".app")
     let scrollTop = document.documentElement.scrollTop
+    let tabs = document.querySelector('.tabs')
     if(scrollTop > height ) {
       //console.log("scrolled")
       app.classList.add("scrolled")
+      tabs.classList.add("fixed")
     } else {
       //console.log("no")
       app.classList.remove("scrolled")
+      tabs.classList.remove("fixed")
     }
   }
 
