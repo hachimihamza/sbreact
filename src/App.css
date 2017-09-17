@@ -392,6 +392,9 @@ template {
 [hidden] {
   display: none; }
 
+/* Color */
+/* Padding */
+/* Margin */
 * {
   box-sizing: border-box; }
 
@@ -441,7 +444,7 @@ html, body, #root {
 =============================================*/
 .topbar {
   display: flex;
-  padding: 1rem; }
+  padding: 0.8rem; }
 
 /*=============================================
 =            Controls            =
@@ -469,7 +472,7 @@ html, body, #root {
 
 .search-input {
   width: 100%;
-  padding: 1rem 47px;
+  padding: 0.8rem 47px;
   outline: 0;
   border: 0; }
 
@@ -524,14 +527,14 @@ html, body, #root {
 .select-option {
   display: block;
   background: #fff;
-  padding: 1rem 1rem; }
+  padding: 0.8rem 0.8rem; }
 
 .select-option:hover {
   background: #e0e0e0; }
 
 .select-input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem;
   outline: 0;
   border: 0;
   cursor: pointer; }
@@ -553,7 +556,7 @@ html, body, #root {
 
 .tab {
   flex: 1;
-  padding: 1rem 1rem;
+  padding: 0.8rem 0.8rem;
   list-style-type: none;
   text-transform: capitalize;
   border-bottom: 2px solid #fff;
@@ -641,7 +644,7 @@ html, body, #root {
   width: 100%;
   max-width: 400px;
   margin: 1rem;
-  padding: 1rem; }
+  padding: 0.8rem; }
 
 .item-description {
   display: block;
@@ -658,7 +661,7 @@ html, body, #root {
   height: 300px; }
 
 .item-price {
-  padding: 1rem;
+  padding: 0.8rem;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 500;
@@ -677,7 +680,7 @@ html, body, #root {
   padding: 0.5rem; }
 
 .item-add {
-  padding: 1rem;
+  padding: 0.8rem;
   border: 0;
   background: #fff;
   border-radius: 50%;
@@ -701,28 +704,32 @@ html, body, #root {
   background-color: rgba(0, 0, 0, 0.1); }
 
 .close-modal {
-  color: #f44336;
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: #fff;
-  border: 0; }
+  border: 0;
+  cursor: pointer; }
 
 .store-manager {
-  margin: 10% auto;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 4rem auto;
   padding: 1rem;
   width: 100%;
-  max-height: 500px;
+  max-height: 400px;
   max-width: 400px;
   background: #fff;
-  overflow: auto;
   text-align: right; }
+
+.storelist {
+  overflow: auto; }
 
 /*----------  Store row  ----------*/
 .store-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: 1rem; }
+  padding: 0.8rem; }
 
 .store-row:hover {
   background: #e0e0e0; }
@@ -746,6 +753,6 @@ html, body, #root {
 
 .store-search input {
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem;
   outline: 0;
   border: 1px solid #0d47a1; }
