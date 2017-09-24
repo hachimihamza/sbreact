@@ -1,0 +1,73 @@
+@import "variable";
+
+/* Container */
+
+.findstore {
+  width: 30%;
+  position: relative;
+  cursor: pointer;
+}
+
+/* stores-list */
+
+.store-list {
+  width: 100%;
+  max-height: 300px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  background: $white;
+  border: 1px solid $blue;
+  border-top: 0;
+  @extend .card-2;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+
+/*----------  store search  ---------- */
+
+.store-search input {
+  width: 100%;
+  padding: $sm-padding;
+  outline: 0;
+  border: 1px solid $blue;
+}
+
+
+/*----------  Store row  ---------- */
+
+.store-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: $sm-padding;
+}
+
+.store-row:hover {
+  background: $silver;
+}
+
+.store-row button {
+  padding: $xs-padding;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.store-row .add {
+  color: $silver;
+}
+.store-row .remove {
+  color : $green;
+}
+/*----------  Store-list-close  ----------*/
+.store-list-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: $xs-padding;
+  height: 100%;
+  color: $blue;
+}

@@ -60,7 +60,7 @@ class Option extends Component {
     }
   }
   
-  class SelectBar extends Component {
+class SelectBar extends Component {
     constructor(props) {
       super(props)
       this.state = {
@@ -90,6 +90,6 @@ class Option extends Component {
         </div>
       )
     }
-  }
+}
   
 export default SelectBar;

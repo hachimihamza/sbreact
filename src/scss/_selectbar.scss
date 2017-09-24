@@ -1,0 +1,48 @@
+@import "variable";
+/*
+.selectbar {
+  width: 30%;
+  position: relative;
+  cursor: pointer;
+}
+.selectbar .select {
+  position: relative;
+  border: 1px solid $blue;
+  transition: border 1s;
+}
+
+.select-options {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+
+  list-style-type: none;
+  background: $white;
+  border: 1px solid $blue;
+  border-top: 0;
+
+  @extend .card;
+  z-index: 100;
+}
+.select-option {
+  display: block;
+  background: $white;
+  padding: $sm-padding $sm-padding;
+}
+
+.select-option:hover {
+  background: $silver;
+}
+.select-input {
+  width: 100%;
+  //height: 30px;
+  padding: $sm-padding;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+.select-button {
+  @extend .search-button;
+}
+*/

@@ -1,0 +1,81 @@
+/*=============================================
+=            tabbar            =
+=============================================*/
+
+.tabbar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.tabs {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    @extend .card
+}
+
+.tab {
+    flex: 1;
+    position: relative;
+    padding: $sm-padding $sm-padding;
+    list-style-type: none;
+    text-transform: capitalize;
+    border-bottom: 2px solid $white; //truncate
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; //font 
+    text-decoration: none;
+    color: $black;
+    outline: 0;
+    cursor: pointer;
+}
+
+.tab.active {
+    border-bottom: 2px solid $blue;
+}
+
+.tab .storename {
+    vertical-align: middle;
+}
+
+.favicon {
+    height: 16px;
+    width: 16px;
+    color: $blue;
+    vertical-align: middle;
+}
+
+.tab .loading {
+    vertical-align: middle;
+}
+
+.tab.add .fa {
+    color: $blue;
+}
+
+.tab .remove-store {
+    display: none;
+}
+.tab.active .remove-store {
+    display: none;
+    position: absolute;
+    top: $sm-padding;
+    right: $sm-padding;
+}
+
+
+/* Tabs on Scroll */
+
+.tabs.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: $white;
+}
+
+.tabs.fixed+.view {
+    margin-top: 4rem;
+}

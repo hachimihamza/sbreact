@@ -1,0 +1,45 @@
+
+/*=============================================
+=            SearchBar            =
+=============================================*/
+.searchbar {
+    width: 70%;
+    position: relative;
+    margin-right: $md-margin;
+    border: 1px solid $blue;
+    transition: border 1s;
+  }
+  .search-input {
+    width: 100%;
+    //height: 30px;
+    padding: $sm-padding; 
+    outline: 0;
+    border: 0;
+  }
+  .search-button {
+    position: absolute;
+    right: 1px;
+    top: 0;
+    bottom: 0;
+    border: 0;
+    color: $blue;
+    background: $white;
+    outline: 0;
+  }
+  .search-logo {
+    position: absolute;
+    left:0;
+    top: 0;
+    bottom: 0;
+    border: 0;
+    color: $blue;
+    background: $white;
+    outline: 0;
+    height: 100%;
+  }
+  .searchbar:focus, .searchbar:hover {
+    //border: 2px solid $blue;
+    outline: 0;
+  }
+  
+  

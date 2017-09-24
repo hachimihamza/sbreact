@@ -17,7 +17,7 @@
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
     "start": "npm-run-all -p watch-css start-react",
-    "build": "npm-run-all -p build-css && react-scripts build && rm -r ~/shpserver/web/app/* && cp -r build/* ~/shpserver/shp/app/",
+    "build": "npm-run-all -p build-css && react-scripts build && rm -r ~/shpserver/web/app/* && cp -r build/* ~/shpserver/web/app/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

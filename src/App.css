@@ -395,39 +395,13 @@ template {
 /* Color */
 /* Padding */
 /* Margin */
-* {
-  box-sizing: border-box; }
-
-html, body, #root {
-  box-sizing: border-box;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-size: 10px; }
-
-.app {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  font-family: sans-serif;
-  font-size: 14px; }
-
-.app .header {
-  background: #fff; }
-
-.app .main {
-  flex: 1; }
-
 /*=============================================
 =            card            =
 =============================================*/
-.card, .select-options, .tabs, .item {
+.card, .tabs, .item {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
-.card-2 {
+.card-2, .store-list {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .card-3 {
@@ -436,108 +410,66 @@ html, body, #root {
 .card-4 {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
 
-.card-5, .store-manager {
+.card-5 {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
 
-/*=============================================
-=            TopBar            =
-=============================================*/
-.topbar {
-  display: flex;
-  padding: 0.8rem; }
-
-/*=============================================
-=            Controls            =
-=============================================*/
-.ctrl-btn {
-  padding: 0 1rem;
-  color: #0d47a1;
-  background: #fff;
-  outline: 0;
-  border: 1px solid #0d47a1;
-  border-right: 0; }
-
-.logo {
-  height: 100%; }
-
-/*=============================================
-=            SearchBar            =
-=============================================*/
-.searchbar {
-  width: 70%;
-  position: relative;
-  margin-right: 1rem;
-  border: 1px solid #0d47a1;
-  transition: border 1s; }
-
-.search-input {
-  width: 100%;
-  padding: 0.8rem 47px;
-  outline: 0;
-  border: 0; }
-
-.search-button, .select-button {
-  position: absolute;
-  right: 1px;
-  top: 0;
-  bottom: 0;
-  border: 0;
-  color: #0d47a1;
-  background: #fff;
-  outline: 0; }
-
-.search-logo {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  border: 0;
-  color: #0d47a1;
-  background: #fff;
-  outline: 0;
-  height: 100%; }
-
-.searchbar:focus, .searchbar:hover {
-  outline: 0; }
-
-/*=============================================
-=            SelectBar            =
-=============================================*/
-.selectbar {
+/* Container */
+.findstore {
   width: 30%;
   position: relative;
   cursor: pointer; }
 
-.selectbar .select {
-  position: relative;
-  border: 1px solid #0d47a1;
-  transition: border 1s; }
-
-.select-options {
+/* stores-list */
+.store-list {
   width: 100%;
+  max-height: 300px;
   margin: 0;
   padding: 0;
   position: absolute;
-  list-style-type: none;
   background: #fff;
   border: 1px solid #0d47a1;
   border-top: 0;
-  z-index: 100; }
+  z-index: 100;
+  overflow-y: auto; }
 
-.select-option {
-  display: block;
-  background: #fff;
-  padding: 0.8rem 0.8rem; }
-
-.select-option:hover {
-  background: #e0e0e0; }
-
-.select-input {
+/*----------  store search  ---------- */
+.store-search input {
   width: 100%;
   padding: 0.8rem;
   outline: 0;
+  border: 1px solid #0d47a1; }
+
+/*----------  Store row  ---------- */
+.store-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.8rem; }
+
+.store-row:hover {
+  background: #e0e0e0; }
+
+.store-row button {
+  padding: 0.5rem;
   border: 0;
+  outline: 0;
+  background: transparent;
   cursor: pointer; }
+
+.store-row .add {
+  color: #e0e0e0; }
+
+.store-row .remove {
+  color: #4caf50; }
+
+/*----------  Store-list-close  ----------*/
+.store-list-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  height: 100%;
+  color: #0d47a1; }
 
 /*=============================================
 =            tabbar            =
@@ -556,6 +488,7 @@ html, body, #root {
 
 .tab {
   flex: 1;
+  position: relative;
   padding: 0.8rem 0.8rem;
   list-style-type: none;
   text-transform: capitalize;
@@ -586,6 +519,15 @@ html, body, #root {
 .tab.add .fa {
   color: #0d47a1; }
 
+.tab .remove-store {
+  display: none; }
+
+.tab.active .remove-store {
+  display: none;
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem; }
+
 /* Tabs on Scroll */
 .tabs.fixed {
   position: fixed;
@@ -597,43 +539,44 @@ html, body, #root {
   margin-top: 4rem; }
 
 /*=============================================
-=            View            =
+=            SearchBar            =
 =============================================*/
-.view {
-  flex: 1;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  padding: 1rem; }
+.searchbar {
+  width: 70%;
+  position: relative;
+  margin-right: 1rem;
+  border: 1px solid #0d47a1;
+  transition: border 1s; }
 
-.view .loader {
-  display: none; }
+.search-input {
+  width: 100%;
+  padding: 0.8rem;
+  outline: 0;
+  border: 0; }
 
-.view.loading .loader {
-  display: block; }
+.search-button {
+  position: absolute;
+  right: 1px;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  color: #0d47a1;
+  background: #fff;
+  outline: 0; }
 
-.view.still-loading .loader {
-  display: block; }
+.search-logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  color: #0d47a1;
+  background: #fff;
+  outline: 0;
+  height: 100%; }
 
-/*=============================================
-=            loader            =
-=============================================*/
-.loader {
-  align-self: center;
-  margin-right: auto;
-  margin-left: auto;
-  border: 5px solid #e0e0e0;
-  border-top: 5px solid #0d47a1;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite; }
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
+.searchbar:focus, .searchbar:hover {
+  outline: 0; }
 
 /*=============================================
 =            Item            =
@@ -642,7 +585,7 @@ html, body, #root {
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   margin: 1rem;
   padding: 0.8rem; }
 
@@ -691,68 +634,88 @@ html, body, #root {
 .item-link {
   color: #0d47a1; }
 
-/*=============================================
-=            StoresManager            =
-=============================================*/
-.modal {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
+* {
+  box-sizing: border-box; }
+
+html, body, #root {
+  box-sizing: border-box;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1); }
-
-.close-modal {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background: #fff;
+  margin: 0;
+  padding: 0;
   border: 0;
-  cursor: pointer; }
+  outline: 0;
+  font-size: 10px; }
 
-.store-manager {
+.app {
+  position: relative;
   display: flex;
-  flex-flow: column nowrap;
-  margin: 4rem auto;
-  padding: 1rem;
-  width: 100%;
-  max-height: 400px;
-  max-width: 400px;
-  background: #fff;
-  text-align: right; }
+  flex-direction: column;
+  min-height: 100%;
+  font-family: sans-serif;
+  font-size: 14px; }
 
-.storelist {
-  overflow: auto; }
+.app .header {
+  background: #fff; }
 
-/*----------  Store row  ----------*/
-.store-row {
+.app .main {
+  flex: 1; }
+
+/*=============================================
+=            TopBar            =
+=============================================*/
+.topbar {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
   padding: 0.8rem; }
 
-.store-row:hover {
-  background: #e0e0e0; }
-
-.store-row button {
-  background: transparent;
-  border: 0;
-  padding: 0.5rem;
-  cursor: pointer;
-  outline: 0; }
-
-.store-row .add {
-  color: #4caf50; }
-
-.store-row .remove {
-  color: #f44336; }
-
-/*----------  store search  ----------*/
-.store-search {
-  margin-bottom: 1rem; }
-
-.store-search input {
-  width: 100%;
-  padding: 0.8rem;
+/*=============================================
+=            Controls            =
+=============================================*/
+.ctrl-btn {
+  padding: 0 1rem;
+  color: #0d47a1;
+  background: #fff;
   outline: 0;
-  border: 1px solid #0d47a1; }
+  border: 1px solid #0d47a1;
+  border-right: 0; }
+
+.logo {
+  height: 100%; }
+
+/*=============================================
+=            View            =
+=============================================*/
+.view {
+  flex: 1;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 1rem; }
+
+.view .loader {
+  display: none; }
+
+.view.loading .loader {
+  display: block; }
+
+.view.still-loading .loader {
+  display: block; }
+
+/*=============================================
+=            loader            =
+=============================================*/
+.loader {
+  align-self: center;
+  margin-right: auto;
+  margin-left: auto;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0d47a1;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }

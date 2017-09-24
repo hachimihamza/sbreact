@@ -18,10 +18,10 @@ class SearchBar extends Component {
     }
     render() {
       return (
-        <form className="searchbar" onSubmit={this.handleSubmit}>          <img className="search-logo" src={logo} alt="logo" />
+        <form className="searchbar" onSubmit={this.handleSubmit}>          
           <input type="search" className="search-input" name="q" placeholder="search..." onChange={this.handleChange}/>
-          <button className="search-button" type="submit">
-            <i className="fa fa-search fa-lg" aria-hidden="true"></i>
+          <button className="search-button material-icons" type="submit">
+           search
           </button>
         </form>
       )

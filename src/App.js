@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 import SearchBar from './component/searchbar';
-import SelectBar from './component/selectbar';
+import SelectBar from './component/findstore';
 import TabBar from './component/tabbar';
-import StoreManager from './component/storemanager.js';
+import FindStore from './component/findstore.js';
 
 
 /*=============================================
@@ -27,8 +27,7 @@ class App extends Component {
     this.onScroll = this.onScroll.bind(this)
     this.addStore = this.addStore.bind(this)
     this.removeStore = this.removeStore.bind(this)
-    this.showModal = this.showModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
+    this.showStoreList = this.showStoreList.bind(this)
     /* Categories & Stores */
     this.categories = CATEGORIES
     this.fetchStores()
@@ -84,7 +83,7 @@ class App extends Component {
       let currentStore = get(store['id'], activeStores)
       let allStore = activeStores[0]
       allStore['items'] = allStore['items'].concat(items.slice(0,20))
-      currentStore['items'] = items.slice(0, 20)
+      currentStore['items'] = items
       /* Loading Callback */
       currentStore['loading'] = 0
       allStore['loading'] = allStore['loading'] - 1
@@ -165,14 +164,9 @@ class App extends Component {
   }
 
   /* Modal Management */
-  showModal(){
+  showStoreList(){
     this.setState({
-      storesManager: true
-    })
-  }
-  closeModal(){
-    this.setState({
-      storesManager: false
+      showStoreList: true
     })
   }
 
@@ -190,26 +184,20 @@ class App extends Component {
               onQuery={this.onQuery}
               onSearch={this.onSearch}
             />
-            <SelectBar
-              options={this.categories}
-              activeOption={this.state.activeCategory}
-              onOptionSelected={this.onOptionSelected} />
+            <FindStore
+              stores={this.state.stores}
+              activeStores={this.state.activeStores}
+              onAdd={this.addStore}
+              onRemove={this.removeStore}
+              showList={this.state.showStoreList} />
           </div>
         </header>
         <main className="main">
           <TabBar
-            activeStores={this.state.activeStores} 
-            showSM={this.showModal}
+            activeStores={this.state.activeStores}             
+            showStoreList={this.showStoreList}
             />
         </main>
-        <StoreManager
-          show={this.state.storesManager} 
-          stores={this.state.stores} 
-          activeStores={this.state.activeStores} 
-          onAdd={this.addStore}
-          onRemove={this.removeStore}
-          closeModal={this.closeModal}
-          />
       </div>
     );
   }

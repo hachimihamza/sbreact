@@ -23,6 +23,9 @@ class Tab extends Component {
       return (
         <a href="#tabbar" className={"tab " + (isActive ? "active" : "")} onClick={this.onClick}>
            {icon} <span className="storename">{store.name}</span>
+          <div className="remove-store">
+            <i className="fa fa-close"></i>
+          </div>
         </a>
       )
     }
@@ -57,9 +60,6 @@ class Tab extends Component {
         <div id="tabbar" className="tabbar">
           <ul className="tabs">
             {listTab}
-            <div className="tab add" onClick={this.props.showSM}>
-              <i className="fa fa-plus"></i> Add new store
-            </div>
           </ul>
           <View store={this.state.activeStore} />
         </div>

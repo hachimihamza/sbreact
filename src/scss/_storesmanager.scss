@@ -1,0 +1,71 @@
+/*=============================================
+=            StoresManager            =
+============================================= */
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.1);
+  }
+  .close-modal {
+    padding: $xs-padding;
+    margin-bottom: $sm-margin;
+    background: $white;
+    border: 0;
+    cursor: pointer;
+  }
+  .store-manager {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 4rem auto;
+    padding: $md-padding;
+    width: 100%;
+    max-height: 400px;
+    max-width: 400px;
+    background: $white;
+    text-align: right;
+    @extend .card-5;
+  }
+  .storelist {
+    overflow: auto;
+  }
+  
+  /*----------  Store row  ---------- */
+  .store-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: $sm-padding;
+  }
+  .store-row:hover {
+    background: $silver;
+  }
+  .store-row button {
+    background: transparent;
+    border: 0;
+    padding: $xs-padding;
+    cursor: pointer;
+    outline: 0;
+  }
+  .store-row .add {
+    color: $green;  
+  }
+  .store-row .remove {
+    color: $red;
+  }
+  
+  /*----------  store search  ---------- */
+  .store-search {
+    margin-bottom: $sm-margin;
+  }
+  
+  .store-search input {
+    width: 100%;
+    padding: $sm-padding; 
+    outline: 0;
+    border: 1px solid $blue;
+  }
+  

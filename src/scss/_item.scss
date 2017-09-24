@@ -1,0 +1,66 @@
+/*=============================================
+=            Item            =
+=============================================*/
+
+.item {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    max-width: 300px;
+    margin: $sm-margin;
+    padding: $sm-padding;
+    @extend .card;
+}
+
+.item-description {
+    display: block;
+    flex: 1;
+    text-decoration: none;
+    outline: 0;
+}
+
+.item-image {
+    text-align: center;
+}
+
+.item-image img {
+    width: auto;
+    max-width: 300px;
+    height: 300px;
+}
+
+.item-price {
+    padding: $sm-padding;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: $blue;
+}
+
+.item-text {
+    padding: $xs-padding;
+    color: #303030;
+    font-size: 1.3rem;
+    line-height: 2rem;
+}
+
+.item-controls {
+    display: none;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: $xs-padding;
+}
+
+.item-add {
+    padding: $sm-padding;
+    border: 0;
+    background: $white;
+    border-radius: 50%;
+    color: $blue;
+    cursor: pointer;
+    outline: 0;
+}
+
+.item-link {
+    color: $blue;
+}
