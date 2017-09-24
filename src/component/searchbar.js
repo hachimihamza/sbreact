@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../img/logo.ico';
+//import logo from '../img/logo.ico';
 /*=============================================
 =            SearchBar            =
 =============================================*/

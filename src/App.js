@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import SearchBar from './component/searchbar';
-import SelectBar from './component/findstore';
 import TabBar from './component/tabbar';
 import FindStore from './component/findstore.js';
 

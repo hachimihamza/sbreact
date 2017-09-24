@@ -32,17 +32,12 @@ class StoreRow extends Component {
   }
   render() {
     let addButton = (
-      <button 
-        className="add button material-icons" 
-        onClick={this.onAdd}>done
-      </button>
+      <span className="add button material-icons" >done
+      </span>
     )
     let removeButton = (
-      <button 
-        className="remove button material-icons"
-        onClick={this.onRemove}
-      >done
-      </button>
+      <span className="remove button material-icons">done
+      </span>
     )
     let button = addButton
     var added = false
@@ -92,6 +87,7 @@ class FindStore extends Component {
     var storesList = this.props.stores.map((store) => {
         if (store.name.toLowerCase().indexOf(this.state.query) !== -1) {
           return <StoreRow
+            key={store.id}
             store={store}
             onAdd={this.props.onAdd}
             onRemove={this.props.onRemove}
