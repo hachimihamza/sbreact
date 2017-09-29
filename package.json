@@ -1,9 +1,9 @@
 {
   "name": "shp_react",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "proxy": "http://storesbrowser.com",
-  "homepage": ".",
+  "homepage": "http://.",
   "dependencies": {
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
@@ -20,5 +20,14 @@
     "build": "npm-run-all -p build-css && react-scripts build && rm -r ~/shpserver/web/app/* && cp -r build/* ~/shpserver/web/app/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://hachimihamza335@bitbucket.org/hachimihamza335/shp_react.git"
+  },
+  "author": "Hamza Hachimi",
+  "license": "ISC"
 }

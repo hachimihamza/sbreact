@@ -4,7 +4,6 @@ import SearchBar from './component/searchbar';
 import TabBar from './component/tabbar';
 import FindStore from './component/findstore.js';
 
-
 /*=============================================
 =            Applicaton            =
 =============================================*/
